@@ -13,7 +13,7 @@ import glob
 import subprocess
 import re
 
-def tail_latency(i,spout_num,percentile,nskip):
+def tail_latency(i,spout_num,percentile,nskip, port):
     '''
     tuple_latencies = list()
     count = 0
@@ -53,12 +53,13 @@ def tail_latency(i,spout_num,percentile,nskip):
     '''
     lat = list()
     for i in range(5, 10):
-        args = ['java', '-cp', '/home/ubuntu/bilal/TDigestService/target/TDigestService-1.0-SNAPSHOT-jar-with-dependencies.jar', 'com.tdigestclient.Main', '127.0.0.1' ,'11111', str((1.0*i)/10)]
+        args = ['java', '-cp', '/home/ubuntu/bilal/TDigestService/target/TDigestService-1.0-SNAPSHOT-jar-with-dependencies.jar', 'com.tdigestclient.Main', '127.0.0.1' ,port, str((1.0*i)/10)]
         p = subprocess.Popen(args, stdout=subprocess.PIPE)
         m = re.search('[0-9].*',p.stdout.readline())
        	if m!=None:
+            print m.group(0)
 	    lat.append(m.group(0)) 
-    args = ['java', '-cp', '/home/ubuntu/bilal/TDigestService/target/TDigestService-1.0-SNAPSHOT-jar-with-dependencies.jar', 'com.tdigestclient.Main', '127.0.0.1' ,'11111', str(0.99)]
+    args = ['java', '-cp', '/home/ubuntu/bilal/TDigestService/target/TDigestService-1.0-SNAPSHOT-jar-with-dependencies.jar', 'com.tdigestclient.Main', '127.0.0.1' ,port, str(0.99)]
     p = subprocess.Popen(args, stdout=subprocess.PIPE)
     m = re.search('[0-9].*',p.stdout.readline())
     if m!=None:
@@ -324,10 +325,11 @@ def main():
     percentile = int(sys.argv[6])
     skip_intervals = int(sys.argv[7])
     tolerance = float(sys.argv[8])
+    port = sys.argv[9]
     if spout_num==0:
         loaded_data = yaml.load(open("config_files/test"+index+".yaml",'r'))
         spout_num = int(loaded_data["component.spout_num"])
-    lat = tail_latency(index,spout_num,percentile,skip_intervals)
+    lat = tail_latency(index,spout_num,percentile,skip_intervals, port)
     print lat
     #print tail_99
     components = ['rolling_count','split']

@@ -1,9 +1,9 @@
-topology.workers: 6,12,3
-component.rolling_count_bolt_num: 3,45,3
-component.split_bolt_num: 3,45,3
-component.spout_num: 6,12,3
-topology.acker.executors: 6,12,3
-topology.max.spout.pending: 2000,10000,2000
+component.split_bolt_num: +1
+component.rolling_count_bolt_num: +1
+component.spout_num: +1
+topology.acker.executors: +1
+topology.max.spout.pending: -1
+topology.workers: -1
 #topology.worker.receiver.thread.count: 1,3,1
 #topology.backpressure.enable: false,true,null,boolean
 #topology.worker.shared.thread.pool.size: 4,8,2

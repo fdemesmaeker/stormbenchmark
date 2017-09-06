@@ -147,7 +147,7 @@ def get_neighbor(result,start,end,step,typ,p,conf):
 def get_results(start, end, design_space, basefile, metric):
     write(design_space, start,end ,basefile)
     for i in range(start, end):
-        bashCommand = "./onescript.sh " + str(i)
+        bashCommand = "./onescript.sh " + str(i) + " 11111"
         process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
         output = process.communicate()[0]
 

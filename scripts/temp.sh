@@ -65,7 +65,7 @@ done < hosts
 STORM_HOME=~/ansible-test/storm/apache-storm-1.0.1
 REDIS_HOME=~/bilal/redis-3.2.0/src
 TOPOLOGY=RollingTopWords
-CONF=rollingtopwords.yaml
+CONF=rollingtopwords1.yaml
 
 #Kil any older running topologies
 #$STORM_HOME/bin/storm kill $TOPOLOGY -w 1
@@ -116,8 +116,8 @@ done
 #kill -9 $PERF_PID
 
 #sleep 210
-python storm_metrics.py RollingTopWords $i
-$STORM_HOME/bin/storm kill $TOPOLOGY -w 1 
+python storm_metrics.py RollingTopWords1 $i
+$STORM_HOME/bin/storm kill RollingTopWords1 -w 1 
 #$STORM_HOME/bin/storm kill RollingCount -w 1 
 sleep 20 
 

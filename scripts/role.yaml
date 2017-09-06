@@ -1,0 +1,12 @@
+topology.workers: throughput
+component.rolling_count_bolt_num: latency
+component.split_bolt_num: latency
+component.spout_num: throughput
+topology.acker.executors: latency
+topology.max.spout.pending: throughput
+topology.worker.receiver.thread.count: neutral
+topology.backpressure.enable: neutral
+topology.worker.shared.thread.pool.size: neutral
+topology.bolts.outgoing.overflow.buffer.enable: neutral
+topology.disruptor.batch.size: throughput
+topology.disruptor.batch.timeout.millis: neutral

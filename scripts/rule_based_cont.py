@@ -399,7 +399,6 @@ def rule_based(conf,sample,start,end,step,typ, relations,basefile, metric,lat_p,
             metric_values,numbers = get_results(length,length+1,design_space, basefile,metric)
             fx_new = min(metric_values)
             tp = get_tp(length)
-            thres_tp = threshold_tp(metric) + (threshold_tp(metric)*0.02)
             if constraint=="throughput" and tp>tp_old and fx_new<=fx0:
                 fx0 = fx_new
                 x0 = dict(x_new)

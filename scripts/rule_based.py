@@ -129,7 +129,7 @@ def get_tp(index):
 # Generates the initial set of exploration points instead of using random points or LHS
 def generate_initial(result,start,end,step,typ,relations,p,conf):
     cores = int(core_count.get())
-    threads = np.random.dirichlet([1000,1000,1000,1000,1000],1)
+    threads = np.random.dirichlet([1000,1000],1)
     k=0
     print conf
     for c in conf:
@@ -288,9 +288,9 @@ def hill_climbing(conf,sample,start,end,step,typ, relations,basefile, metric,lat
     index = 0
     f = True
     retry = False
-    #bolt_ids = ["component.rolling_count_bolt_num","component.split_bolt_num" ]
+    bolt_ids = ["component.rolling_count_bolt_num","component.split_bolt_num" ]
     #bolt_ids = ["component.rolling_count_bolt_num","component.split_bolt_num","component.rank_bolt_num"]
-    bolt_ids = ["component.stemming_bolt_num","component.positive_bolt_num","component.negative_bolt_num","component.score_bolt_num","component.logging_bolt_num"]
+    #bolt_ids = ["component.stemming_bolt_num","component.positive_bolt_num","component.negative_bolt_num","component.score_bolt_num","component.logging_bolt_num"]
     while f:
         print f
         max_capacity = 0

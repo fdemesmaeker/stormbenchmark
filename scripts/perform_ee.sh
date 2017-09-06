@@ -3,7 +3,8 @@
 # Get rankings for all the metrics
 for i in `seq 50 10 90` 
 do
-python ee.py lat_$i numbers.csv lat_$i.html
+echo "For $i th percentile latency"
+python ee.py lat_$i numbers.csv conf_rollingcount_hc.yaml lat_$i.html
 done
-
-python ee.py throughput numbers.csv throughput.html
+echo "For throughput"
+python ee.py throughput numbers.csv conf_rollingcount_hc.yaml throughput.html

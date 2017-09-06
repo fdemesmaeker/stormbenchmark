@@ -64,13 +64,8 @@ done < hosts
 #STORM_HOME=~/ansible-test/storm/apache-storm-0.9.5
 STORM_HOME=~/ansible-test/storm/apache-storm-1.0.1
 REDIS_HOME=~/bilal/redis-3.2.0/src
-TOPOLOGY=RollingTopWords
-CONF=rollingtopwords.yaml
-
-#Kil any older running topologies
-#$STORM_HOME/bin/storm kill $TOPOLOGY -w 1
-sleep 5
-
+TOPOLOGY=SentimentAnalysis
+CONF=sentiment.yaml
 mkdir -p config_files
 i=$1
 #nfiles=$(ls config_files/ | wc -l)
@@ -79,7 +74,7 @@ mkdir -p utils
 mkdir -p net_utils
 mkdir -p perf
 cleanup
-max=3
+max=5
 retries=3
 while true; do
 #python randomize.py
@@ -87,8 +82,8 @@ cp config_files/test$i.yaml ~/.storm/$CONF
 #cat ~/.storm/sol.yaml
 ../bin/stormbench -storm $STORM_HOME/bin/storm -jar ../target/storm-benchmark-0.1.0-jar-with-dependencies.jar -conf ~/.storm/$CONF  storm.benchmark.tools.Runner storm.benchmark.benchmarks.$TOPOLOGY &
 utilizations $i
-#kill -9 $(jps | grep "TServer" | awk '{print $1}')
-nohup java -cp ~/bilal/TDigestService/target/TDigestService-1.0-SNAPSHOT-jar-with-dependencies.jar com.tdigestserver.TServer $2 &
+kill -9 $(jps | grep "TServer" | awk '{print $1}')
+nohup java -cp ~/bilal/TDigestService/target/TDigestService-1.0-SNAPSHOT-jar-with-dependencies.jar com.tdigestserver.TServer 11111 &
 sleep 10
 #getcounters $i &
 #PID=$(jps | grep "worker" | awk '{print $1}')
@@ -116,27 +111,24 @@ done
 #kill -9 $PERF_PID
 
 #sleep 210
-python storm_metrics.py RollingTopWords $i
+python storm_metrics.py $i
 $STORM_HOME/bin/storm kill $TOPOLOGY -w 1 
-#$STORM_HOME/bin/storm kill RollingCount -w 1 
 sleep 20 
 
 if [[ $flag ]]; then
 mkdir -p metrics
 copycounters $i
 #getmetrics $i
-
-#redis_getmetrics $i
-
+redis_getmetrics $i
 #mkdir -p logs/logs/
 #cp logs/metrics.log logs/logs/metrics.log
 #ls -r logs/logs/metrics* | xargs -I {} cat {} >> metrics/metrics$i.log
 #rm -rf logs
 echo "Current iteration number is $i"
 #Arguments: Directory, Index, Threads, number of nodes, number of spout, percentile latency, skip intervals, tolerance
-if python process.py json_files/ $i 90 3 3 99 10 1.1 $2; then echo "Exit code of 0, success"; else continue; fi
+if python process.py json_files/ $i 90 3 3 99 10 1.1; then echo "Exit code of 0, success"; else continue; fi
 #python process.py json_files/ $i 90 3 3 99 10 1.1
-#kill -9 $(jps | grep "TServer" | awk '{print $1}')
+kill -9 $(jps | grep "TServer" | awk '{print $1}')
 break
 #let i=i+1
 #nfiles=$(ls config_files/ | wc -l)
@@ -159,6 +151,6 @@ else
   fi
 fi
 #cleanup
-#redis_cleanup
+redis_cleanup
 done
 #tar -czf test_72k.tar.gz config_files/ json_files/ net_utils/ reports/ utils/ metrics/ numbers.csv

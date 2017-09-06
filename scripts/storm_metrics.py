@@ -7,18 +7,22 @@ import requests
 import os
 
 
-def storm_metrics(index):
+def storm_metrics(name, index):
 	PORT = '8888'
         url = 'http://localhost:'+PORT+'/api/v1/topology/summary'
 	response = requests.get(url)
-	#print response.content
+	print response.content
 
 	result_json = json.loads(response.content)
 	topology_id = ''
-	for i in range(len(result_json['topologies'])):
-		print result_json['topologies'][i]['id']
-		topology_id = result_json['topologies'][i]['id']
 
+        print name
+	for i in range(len(result_json['topologies'])):
+		print result_json['topologies'][i]['name']
+                if result_json['topologies'][i]['name'] ==  name:
+			topology_id = result_json['topologies'][i]['id']
+  			break
+        print topology_id
 	url = 'http://localhost:'+PORT+'/api/v1/topology/'+ topology_id
 	response = requests.get(url)
 
@@ -49,8 +53,9 @@ def storm_metrics(index):
 		print result_json['bolts'][i]['capacity']
 
 def main():
-	index = sys.argv[1]
-	storm_metrics(index)
+	index = sys.argv[2]
+        name = sys.argv[1]
+	storm_metrics(name, index)
         
 if __name__ == '__main__':
     main()
