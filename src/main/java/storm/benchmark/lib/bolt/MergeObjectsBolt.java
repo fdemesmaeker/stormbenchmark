@@ -93,7 +93,7 @@ public class MergeObjectsBolt implements IBasicBolt {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public void execute(Tuple input, BasicOutputCollector collector) {   //Tuple；ranking
+	public void execute(Tuple input, BasicOutputCollector collector) {   //Tupleranking
 		// TODO Auto-generated method stub
 		List<List> merging = (List) JSONValue.parse(input.getString(0));
 		for(List pair : merging) {
@@ -127,7 +127,7 @@ public class MergeObjectsBolt implements IBasicBolt {
 		}
 
 		/**
-		 * 保持固定长度，避免内存占用过多溢�?
+		 * ?
 		 */
 		/*
 		long len = jedis.llen("result");

@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 周期计算统计
+ * 
  */
 public class RollingCountObjects  extends BaseRichBolt {
 
@@ -77,7 +77,7 @@ public class RollingCountObjects  extends BaseRichBolt {
                             for (Object obj: objs) {
                                 long[] counts = _objectCounts.get(obj);
                                 long currBucketVal = counts[bucketToWipe];
-                                counts[bucketToWipe] = 0; //  *这行代码很关键*
+                                counts[bucketToWipe] = 0; //  **
                                 long total = totalObjects(obj);
                                 if(currBucketVal!=0) {
                                     _collector.emit(new Values(obj, total,0l));

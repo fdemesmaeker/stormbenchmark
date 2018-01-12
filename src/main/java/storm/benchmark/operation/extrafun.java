@@ -16,9 +16,9 @@ public class extrafun {
         return avg;
     }
 
-    //计算相似度
+    //
     public static float getweight(HashMap<Integer, Float> data,
-                                   HashMap<Integer, Float> data_test)   //两个数据集，data 和data_set
+                                   HashMap<Integer, Float> data_test)   //data data_set
     {
         float weight = 0;
         float avg1 = 0;
@@ -28,33 +28,33 @@ public class extrafun {
         float measure1x2 = 0;
         float tmp1=0;
         float tmp2=0;
-        List<Integer> id = new ArrayList<Integer>();   //ArrayList:动态数组
+        List<Integer> id = new ArrayList<Integer>();   //ArrayList:
         for(Integer key:data_test.keySet()) {
             if(data.get(key)!=null) {
                 avg1 += data.get(key);
                 avg2 += data_test.get(key);
-                id.add(key);   //向动态数组id中添加key
+                id.add(key);   //idkey
             }
         }
         if (id.size() != 0) {
-            avg1 = avg1/id.size();  //data数据集中的key求均值
-            avg2= avg2/id.size();   //data_set数据集中的key求均值
+            avg1 = avg1/id.size();  //datakey
+            avg2= avg2/id.size();   //data_setkey
             for (Integer key : id) {
-                tmp1 = data.get(key);   // tmp1:data数据集中的key
+                tmp1 = data.get(key);   // tmp1:datakey
                 measure1 += (tmp1 - avg1) * (tmp1 - avg1);
-                tmp2 = data_test.get(key);    // tmp2:data_set数据集中的key
+                tmp2 = data_test.get(key);    // tmp2:data_setkey
                 measure2 += (tmp2 - avg2) * (tmp2 - avg2);
                 measure1x2 += (tmp1 - avg1) * (tmp2 - avg2);
             }
             if (measure1 != 0 && measure2 != 0) {
-                weight = (float) (measure1x2 / (Math.sqrt(measure1 * measure2)));  //计算用户user之间的相似度：sim(x,y)
+                weight = (float) (measure1x2 / (Math.sqrt(measure1 * measure2)));  //usersim(x,y)
             }
         }
         return weight;
     }
 
 
-    public static String gethostname() {  //得到当前机器的hostname
+    public static String gethostname() {  //hostname
         String host = "";
         InetAddress ia = null;
         try {
@@ -90,18 +90,18 @@ public class extrafun {
     //genmap(File input)
     public static HashMap genmap(File input) {
       // Map<userId, Map<movieId, rating>> => data
-         HashMap<Integer, HashMap> data = new HashMap<Integer,HashMap>();   //data:Map类型的变量
+         HashMap<Integer, HashMap> data = new HashMap<Integer,HashMap>();   //data:Map
         try {
             BufferedReader br = new BufferedReader(new FileReader(input));
             String str = br.readLine();
             while (str != null) {
                 int userid = Integer.parseInt(str.split(",")[0]);  //userid
                 final int itemid = Integer.parseInt(str.split(",")[1]);  // itemid
-                final  float rate = Float.parseFloat(str.split(",")[2]);  //rate(打分)
+                final  float rate = Float.parseFloat(str.split(",")[2]);  //rate()
 
-                if (data.get(userid) == null) {   //get(Object key)):该方法返回指定键所映射的值。
-                    data.put(userid, new HashMap<Integer, Float>(){{  //声明的一个Map类型的变量
-                        put(itemid, rate);   //put(K key, V value) :key：是要保存到Map集合中的键名。value：是要保存到Map集合中对应键名的键值对象。
+                if (data.get(userid) == null) {   //get(Object key)):
+                    data.put(userid, new HashMap<Integer, Float>(){{  //Map
+                        put(itemid, rate);   //put(K key, V value) :keyMapvalueMap
                     }});
                 } else {
                     data.get(userid).put(itemid, rate);
@@ -118,7 +118,7 @@ public class extrafun {
     public static ArrayList<String> hostslist(String[] list, int n) {
         ArrayList<String> y = new ArrayList<String>();
         Random r = new Random();
-        int i = r.nextInt(18);   //nextInt(n)返回一个大于等于0小于n的随机数，即：0 <= nextInt(n) < n
+        int i = r.nextInt(18);   //nextInt(n)0n0 <= nextInt(n) < n
         y.add(list[i]);
         int j  = 1;
         while (j < n) {

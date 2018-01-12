@@ -92,8 +92,8 @@ public class RankBolt implements IBasicBolt {
 	@Override
 	public void execute(Tuple input, BasicOutputCollector collector) {  //Tuple:"obj", "count"
 		// TODO Auto-generated method stub
-		Object tag = input.getValue(0);   // 获取obj
-		Integer existingIndex = find(tag);  //查找obj
+		Object tag = input.getValue(0);   // obj
+		Integer existingIndex = find(tag);  //obj
 		//Tuple t = new Values(input.getValue(0), input.getValue(1));
 		if(null != existingIndex) {
 			_rankings.set(existingIndex, Arrays.asList(input.getValue(0) , input.getValue(1)));
@@ -119,7 +119,7 @@ public class RankBolt implements IBasicBolt {
 		
 		long currentTime = System.currentTimeMillis();
 		if(_lastTime == null || currentTime >= _lastTime + 2000) {
-			collector.emit(new Values(JSONValue.toJSONString(_rankings))); //JSON字符串
+			collector.emit(new Values(JSONValue.toJSONString(_rankings))); //JSON
 			System.out.println(JSONValue.toJSONString(_rankings));
 			_lastTime = currentTime;
 		}
