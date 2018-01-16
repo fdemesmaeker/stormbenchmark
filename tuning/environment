@@ -1,7 +1,7 @@
-export STORM_HOME=~/ansible-test/storm/apache-storm-1.0.1
-export REDIS_HOME=~/bilal/redis-3.2.0/src
+export STORM_HOME=/apache-storm-1.1.1
+export REDIS_HOME=/redis-4.0.6/src
 export TOPOLOGY=RollingCount
 export CONF=rollingcount.yaml
-export TDIGEST_JAR=~/bilal/TDigestService/target/TDigestService-1.0-SNAPSHOT-jar-with-dependencies.jar
+export TDIGEST_JAR=/TDigestService/target/TDigestService-1.0-SNAPSHOT-jar-with-dependencies.jar
 export BENCHMARK_TIME=200
 export TSERVER_PORT=11111

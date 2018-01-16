@@ -85,7 +85,7 @@ public class StemmingBolt extends BaseBasicBolt {
 
       private UselessWords() {
          uselessWords = new HashSet<String>();
-         this.reader = new HDFSFileReaderLimited("hdfs://nimbus1:9000/stop_words.txt");
+         this.reader = new HDFSFileReaderLimited("hdfs://hdfsnode:9000/stop_words.txt");
           String line;
          //Add more "useless" words and load from file or database
          while ((line = reader.nextLine())!=null){

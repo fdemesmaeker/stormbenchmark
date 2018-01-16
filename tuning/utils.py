@@ -81,12 +81,24 @@ def utility_function(metric,cw,i):
            return cw[improve_metric][list(cw['no.']).index(i)]
     return sys.maxint
 
+def run_process(exe):
+    p = subprocess.Popen(exe, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    while(True):
+        retcode = p.poll() #returns None while subprocess is running
+        line = p.stdout.readline()
+        yield line
+        if(retcode is not None):
+            break
+
 # Get results for a particular configuration. returns max int if the configuration failed to run
 def get_results(start, end, design_space, basefile, metric):
     write(design_space, start,end ,basefile)
     for i in range(start, end):
         bashCommand = "./onescript.sh " + str(i)
-        process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+        print("Launching bash command: "+str(bashCommand))
+        process = run_process(bashCommand.split())
+        for line in process:
+            print(line)
         output = process.communicate()[0]
 
     cw = pandas.read_csv("numbers.csv")

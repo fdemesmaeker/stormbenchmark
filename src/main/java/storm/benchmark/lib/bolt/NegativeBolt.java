@@ -80,7 +80,7 @@ public class NegativeBolt extends BaseBasicBolt {
       public HDFSFileReaderLimited reader;
       private NegativeWords() {
          negativeWords = new HashSet<String>();
-         this.reader = new HDFSFileReaderLimited("hdfs://nimbus1:9000/negative_words.txt");
+         this.reader = new HDFSFileReaderLimited("hdfs://hdfsnode:9000/negative_words.txt");
          String line; 
          //Add more "useless" words and load from file or database
          while ((line = reader.nextLine())!=null){
